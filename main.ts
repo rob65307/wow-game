@@ -6,9 +6,20 @@ namespace SpriteKind {
     export const green = SpriteKind.create()
     export const yellow = SpriteKind.create()
     export const destroyable = SpriteKind.create()
+    export const shuffler = SpriteKind.create()
 }
 function shuffle () {
-	
+    for (let index = 0; index < 20; index++) {
+        if (Math.randomRange(0, 1) == 0) {
+            shuffler.setPosition(Math.randomRange(1, 12) * 10 + 2, -5)
+            shuffler.setVelocity(0, 100)
+            pause(1000)
+        } else {
+            shuffler.setPosition(-5, Math.randomRange(1, 16) * 10 + 2)
+            shuffler.setVelocity(100, 0)
+            pause(1000)
+        }
+    }
 }
 sprites.onOverlap(SpriteKind.destroyable, SpriteKind.green, function (sprite, otherSprite) {
     otherSprite.setImage(img`
@@ -26,41 +37,6 @@ sprites.onOverlap(SpriteKind.destroyable, SpriteKind.green, function (sprite, ot
     pause(500)
     otherSprite.setKind(SpriteKind.yellow)
 })
-function striggerProjDia (charger: Sprite) {
-    projectile2 = sprites.createProjectileFromSprite(img`
-. 9 9 . 
-9 9 9 9 
-9 9 9 9 
-. 9 9 . 
-`, charger, 30, 30)
-    pause(150)
-    projectile2.setKind(SpriteKind.destroyable)
-    projectile2 = sprites.createProjectileFromSprite(img`
-. 9 9 . 
-9 9 9 9 
-9 9 9 9 
-. 9 9 . 
-`, charger, -30, 30)
-    pause(150)
-    projectile2.setKind(SpriteKind.destroyable)
-    projectile2 = sprites.createProjectileFromSprite(img`
-. 9 9 . 
-9 9 9 9 
-9 9 9 9 
-. 9 9 . 
-`, charger, 30, -30)
-    pause(150)
-    projectile2.setKind(SpriteKind.destroyable)
-    projectile2 = sprites.createProjectileFromSprite(img`
-. 9 9 . 
-9 9 9 9 
-9 9 9 9 
-. 9 9 . 
-`, charger, -30, -30)
-    pause(150)
-    projectile2.setKind(SpriteKind.destroyable)
-    pause(200)
-}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.changeAround, function (sprite, otherSprite) {
     if (controller.A.isPressed()) {
         aroundRing = sprites.create(img`
@@ -100,6 +76,49 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.changeAround, function (sprite, 
         aroundRing.destroy()
     }
 })
+sprites.onOverlap(SpriteKind.shuffler, SpriteKind.changeAround, function (sprite, otherSprite) {
+    if (controller.A.isPressed()) {
+        aroundRing = sprites.create(img`
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 . . . 
+. . . 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 . . . 
+. . . 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 . . . . . . . . . . . . . . . . . . 9 9 9 . . . 
+. . . 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 . . . 
+. . . 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 . . . 
+. . . 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+`, SpriteKind.destroyable)
+        aroundRing.setPosition(otherSprite.x, otherSprite.y)
+        pause(200)
+        aroundRing.destroy()
+    }
+})
+sprites.onOverlap(SpriteKind.shuffler, SpriteKind.changeDiag, function (sprite, otherSprite) {
+    striggerProjDia(otherSprite)
+    pause(100)
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.x >= 10) {
         mySprite.x += -10
@@ -125,6 +144,41 @@ function CreateSpace (x: number, y: number) {
 `, SpriteKind.Ball)
     balls.setPosition(x, y)
 }
+function striggerProjDia (charger: Sprite) {
+    projectile2 = sprites.createProjectileFromSprite(img`
+. 9 9 . 
+9 9 9 9 
+9 9 9 9 
+. 9 9 . 
+`, charger, 30, 30)
+    pause(150)
+    projectile2.setKind(SpriteKind.destroyable)
+    projectile2 = sprites.createProjectileFromSprite(img`
+. 9 9 . 
+9 9 9 9 
+9 9 9 9 
+. 9 9 . 
+`, charger, -30, 30)
+    pause(150)
+    projectile2.setKind(SpriteKind.destroyable)
+    projectile2 = sprites.createProjectileFromSprite(img`
+. 9 9 . 
+9 9 9 9 
+9 9 9 9 
+. 9 9 . 
+`, charger, 30, -30)
+    pause(150)
+    projectile2.setKind(SpriteKind.destroyable)
+    projectile2 = sprites.createProjectileFromSprite(img`
+. 9 9 . 
+9 9 9 9 
+9 9 9 9 
+. 9 9 . 
+`, charger, -30, -30)
+    pause(150)
+    projectile2.setKind(SpriteKind.destroyable)
+    pause(200)
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.changeDiag, function (sprite, otherSprite) {
     if (controller.A.isPressed()) {
         striggerProjDia(otherSprite)
@@ -149,7 +203,6 @@ function CreateMap () {
         }
         CreateCol += 1
     }
-    shuffle()
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.x <= 150) {
@@ -207,6 +260,10 @@ function striggerProj (changer: Sprite) {
     projectile2.setKind(SpriteKind.destroyable)
     pause(200)
 }
+sprites.onOverlap(SpriteKind.shuffler, SpriteKind.changerVert, function (sprite, otherSprite) {
+    striggerProj(otherSprite)
+    pause(100)
+})
 function CreateChanger (x: number, y: number) {
     if (Math.randomRange(0, 2) == 0) {
         changer = sprites.create(img`
@@ -284,13 +341,13 @@ sprites.onOverlap(SpriteKind.destroyable, SpriteKind.changerVert, function (spri
 })
 let changer: Sprite = null
 let chargerStartList: number[] = []
+let projectile2: Sprite = null
 let balls: Sprite = null
 let aroundRing: Sprite = null
-let projectile2: Sprite = null
+let shuffler: Sprite = null
 let mySprite: Sprite = null
 let CreateCol = 0
 scene.setBackgroundColor(1)
-CreateMap()
 CreateCol = 0
 mySprite = sprites.create(img`
 4 4 4 4 4 4 4 4 4 4 
@@ -305,3 +362,10 @@ mySprite = sprites.create(img`
 4 4 4 4 4 4 4 4 4 4 
 `, SpriteKind.Player)
 mySprite.setPosition(5, 5)
+shuffler = sprites.create(img`
+2 2 
+2 2 
+`, SpriteKind.shuffler)
+shuffler.setPosition(-5, -5)
+CreateMap()
+shuffle()
